@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  geopoc-manage:
+    container_name: geopoc-manage
+    build:
+      context: .
+      dockerfile: ./Dockerfile.local
+    env_file:
+      - ./.env.prod
+    volumes:
+      # This volume should be included by the built image (here only for dev usage)
+      - ./data_dir:/opt/geoserver/data_dir
+      # External data
+      - ./data:/opt/geoserver/data_dir/data
+      # JNDI Configuration
+      # - ./tomcat/context.xml:/usr/local/tomcat/conf/context.xml
+      # Logs
+      # - ./logs:/opt/geoserver/data_dir/logs
+    ports:
+      - 8080:8080
+    networks:
+      - default

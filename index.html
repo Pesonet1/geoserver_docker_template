@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@3.8.3/dist/ol-layerswitcher.css" type="text/css" />
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.4/proj4.min.js"></script>
+    <title>geopoc</title>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+      proj4.defs("EPSG:3067", "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+      ol.proj.proj4.register(proj4);
+
+      const projection = ol.proj.get("EPSG:3067");
+      const matrixIds = new Array(16).fill(0).map((value, index) => `JHS180:${index.toString()}`);
+
+      const GEOSERVER_URL = "http://localhost:8080/geoserver";
+
+      // Set projection extent according to JSH180 specification for EPSG:3067 crs!
+      projection.setExtent([-548576, 6291456, 1548576, 8388608]);
+
+      // const osm = new ol.layer.Tile({
+      //   title: "OSM",
+      //   type: "base",
+      //   visible: true,
+      //   source: new ol.source.OSM()
+      // });
+
+      // const xyz = new ol.layer.Tile({
+      //   title: "XYZ",
+      //   type: "base",
+      //   visible: true,
+      //   minZoom: 0,
+      //   maxZoom: 15,
+      //   extent: projection.getExtent(),
+      //   source: new ol.source.XYZ({
+      //     url: "https://tiles.kartat.kapsi.fi/taustakartta_3067/{z}/{x}/{y}.jpg",
+      //     projection: projection,
+      //   }),
+      // });
+
+      const wfs = new ol.layer.Vector({
+        title: "Kunnat WFS",
+        visible: false,
+        extent: projection.getExtent(),
+        source: new ol.source.Vector({
+          format: new ol.format.GeoJSON(),
+          url: () => {
+            return`${GEOSERVER_URL}/poc/wms` +
+              `?service=wfs&version=2.0.0&request=GetFeature&typeNames=kunnat_2019` +
+              `&outputFormat=application/json&LAYERS=kunnat_2019`;
+          },
+          strategy: ol.loadingstrategy.bbox,
+          projection: projection
+        })
+      });
+
+      const wms = new ol.layer.Image({
+        title: "Kunnat WMS",
+        visible: false,
+        extent: projection.getExtent(),
+        zIndex: 1,
+        opacity: 0.7,
+        minZoom: 0,
+        maxZoom: 15,
+        source: new ol.source.ImageWMS({
+          url: `${GEOSERVER_URL}/poc/wms`,
+          params: {
+            LAYERS: "kunnat_2019",
+            TRANSPARENT: true,
+            FORMAT: "image/png8",
+            RATIO: 1,
+          },
+          serverType: "geoserver",
+          projection: projection,
+        }),
+      });
+
+      const corine_wmts = new ol.layer.Tile({
+        title: "Corine WMTS",
+        visible: false,
+        minZoom: 0,
+        maxZoom: 15,
+        opacity: 0.7,
+        extent: projection.getExtent(),
+        source: new ol.source.WMTS({
+          url: `${GEOSERVER_URL}/gwc/service/wmts`,
+          layer: "poc:corine",
+          format: "image/png",
+          matrixSet: "JHS180",
+          style: "",
+          tileGrid: new ol.tilegrid.WMTS({
+            origin: ol.extent.getTopLeft(projection.getExtent()),
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25],
+            matrixIds,
+            extent: projection.getExtent(),
+          }),
+          projection: projection,
+          transition: 0,
+        }),
+      });
+
+      const kunnat_wmts = new ol.layer.Tile({
+        title: "Kunnat WMTS",
+        visible: false,
+        minZoom: 0,
+        maxZoom: 15,
+        opacity: 0.7,
+        extent: projection.getExtent(),
+        source: new ol.source.WMTS({
+          url: `${GEOSERVER_URL}/gwc/service/wmts`,
+          layer: "poc:kunnat_2019",
+          format: "image/png",
+          matrixSet: "JHS180",
+          style: "",
+          tileGrid: new ol.tilegrid.WMTS({
+            origin: ol.extent.getTopLeft(projection.getExtent()),
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25],
+            matrixIds,
+            extent: projection.getExtent(),
+          }),
+          projection: projection,
+          transition: 0,
+        }),
+      });
+
+      const taustakartta_wmts = new ol.layer.Tile({
+        title: "Taustakartta WMTS",
+        type: "base",
+        visible: true,
+        minZoom: 0,
+        maxZoom: 15,
+        opacity: 0.7,
+        extent: projection.getExtent(),
+        source: new ol.source.WMTS({
+          url: `${GEOSERVER_URL}/gwc/service/wmts`,
+          layer: "poc:mml_milj_2020",
+          format: "image/png8",
+          matrixSet: "JHS180",
+          style: "",
+          tileGrid: new ol.tilegrid.WMTS({
+            origin: ol.extent.getTopLeft(projection.getExtent()),
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25],
+            matrixIds,
+            extent: projection.getExtent(),
+          }),
+          projection: projection,
+          transition: 0,
+        }),
+      });
+
+      const baseMaps = new ol.layer.Group({
+        title: "Karttatasot",
+        layers: [taustakartta_wmts, wfs, wms, corine_wmts, kunnat_wmts]
+      });
+
+      var map = new ol.Map({
+        target: "map",
+        layers: [baseMaps],
+        view: new ol.View({
+          projection: projection,
+          center: [400000, 7000000],
+          zoom: 3,
+          maxZoom: 15,
+          minZoom: 2,
+          enableRotation: false,
+        })
+      });
+
+      const layerSwitcher = new LayerSwitcher({});
+
+      map.addControl(layerSwitcher);
+    </script>
+  </body>
+</html>

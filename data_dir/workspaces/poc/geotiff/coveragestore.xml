@@ -1,0 +1,13 @@
+<coverageStore>
+  <id>CoverageStoreInfoImpl-435791e6:17a57cb40b6:-7ffc</id>
+  <name>geotiff</name>
+  <type>GeoTIFF</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-2acaf201:17a323fd4ff:-7ff8</id>
+  </workspace>
+  <__default>false</__default>
+  <dateCreated>2021-06-29 12:50:52.420 UTC</dateCreated>
+  <dateModified>2021-06-29 12:51:07.482 UTC</dateModified>
+  <url>file:data/corine.tif</url>
+</coverageStore>

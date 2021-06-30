@@ -1,0 +1,17 @@
+<layer>
+  <name>mml_milj_2020</name>
+  <id>LayerInfoImpl-435791e6:17a57cb40b6:-7f0e</id>
+  <type>WMTS</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--3683cea0:179a85c8870:-7ffd</id>
+  </defaultStyle>
+  <resource class="wmtsLayer">
+    <id>WMTSLayerInfoImpl-435791e6:17a57cb40b6:-7f0f</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-06-29 13:23:27.15 UTC</dateCreated>
+  <dateModified>2021-06-30 09:19:37.312 UTC</dateModified>
+</layer>

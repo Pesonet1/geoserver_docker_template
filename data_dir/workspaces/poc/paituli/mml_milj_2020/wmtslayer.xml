@@ -1,0 +1,56 @@
+<wmtsLayer>
+  <id>WMTSLayerInfoImpl-435791e6:17a57cb40b6:-7f0f</id>
+  <name>mml_milj_2020</name>
+  <nativeName>mml_milj_2020</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-2acaf201:17a323fd4ff:-7ff7</id>
+  </namespace>
+  <title>MML, Yleiskarttarasteri, 1:1 000 000, 2020</title>
+  <description></description>
+  <nativeCRS class="projected">PROJCS[&quot;ETRS89 / TM35FIN(E,N)&quot;, 
+  GEOGCS[&quot;ETRS89&quot;, 
+    DATUM[&quot;European Terrestrial Reference System 1989&quot;, 
+      SPHEROID[&quot;GRS 1980&quot;, 6378137.0, 298.257222101, AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]], 
+      TOWGS84[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 
+      AUTHORITY[&quot;EPSG&quot;,&quot;6258&quot;]], 
+    PRIMEM[&quot;Greenwich&quot;, 0.0, AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]], 
+    UNIT[&quot;degree&quot;, 0.017453292519943295], 
+    AXIS[&quot;Geodetic latitude&quot;, NORTH], 
+    AXIS[&quot;Geodetic longitude&quot;, EAST], 
+    AUTHORITY[&quot;EPSG&quot;,&quot;4258&quot;]], 
+  PROJECTION[&quot;Transverse_Mercator&quot;, AUTHORITY[&quot;EPSG&quot;,&quot;9807&quot;]], 
+  PARAMETER[&quot;central_meridian&quot;, 27.0], 
+  PARAMETER[&quot;latitude_of_origin&quot;, 0.0], 
+  PARAMETER[&quot;scale_factor&quot;, 0.9996], 
+  PARAMETER[&quot;false_easting&quot;, 500000.0], 
+  PARAMETER[&quot;false_northing&quot;, 0.0], 
+  UNIT[&quot;m&quot;, 1.0], 
+  AXIS[&quot;Easting&quot;, EAST], 
+  AXIS[&quot;Northing&quot;, NORTH], 
+  AUTHORITY[&quot;EPSG&quot;,&quot;3067&quot;]]</nativeCRS>
+  <srs>EPSG:3067</srs>
+  <nativeBoundingBox>
+    <minx>43547.78932226647</minx>
+    <maxx>764796.7155847414</maxx>
+    <miny>6523158.091198515</miny>
+    <maxy>7795461.187543589</maxy>
+    <crs class="projected">EPSG:3067</crs>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>15.053785270822841</minx>
+    <maxx>33.993537468175056</maxx>
+    <miny>58.6074565294299</miny>
+    <maxy>70.26415662234614</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <metadata>
+    <entry key="OTHER_SRS">urn:ogc:def:crs:EPSG::3067,EPSG:3067</entry>
+  </metadata>
+  <store class="wmtsStore">
+    <id>WMTSStoreInfoImpl-435791e6:17a57cb40b6:-7fbd</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+</wmtsLayer>

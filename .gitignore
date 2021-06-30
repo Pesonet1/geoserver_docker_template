@@ -1,0 +1,20 @@
+# Exclude all Geoserver tmp folders
+tmp
+temp
+
+# Exclude data folder => mounted as volume
+data_dir/data
+
+# Exclude all Geoserver logs
+data_dir/logs/geoserver.log*
+
+# Exclude all Geoserver "backup" files
+.bak
+
+tomcat
+
+data_dir/gwc/*
+!data_dir/gwc/geowebcache.xml
+!data_dir/gwc/metadata.properties
+
+.env.prod

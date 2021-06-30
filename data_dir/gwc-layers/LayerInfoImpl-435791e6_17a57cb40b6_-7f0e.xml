@@ -1,0 +1,39 @@
+<GeoServerTileLayer>
+  <id>LayerInfoImpl-435791e6:17a57cb40b6:-7f0e</id>
+  <enabled>true</enabled>
+  <inMemoryCached>true</inMemoryCached>
+  <name>poc:mml_milj_2020</name>
+  <blobStoreId>azure_blob</blobStoreId>
+  <mimeFormats>
+    <string>image/png</string>
+    <string>image/png8</string>
+  </mimeFormats>
+  <gridSubsets>
+    <gridSubset>
+      <gridSetName>JHS180</gridSetName>
+      <extent>
+        <coords>
+          <double>43547.78932226647</double>
+          <double>6523158.091198515</double>
+          <double>764796.7155847414</double>
+          <double>7795461.187543589</double>
+        </coords>
+      </extent>
+    </gridSubset>
+  </gridSubsets>
+  <metaWidthHeight>
+    <int>4</int>
+    <int>4</int>
+  </metaWidthHeight>
+  <expireCache>0</expireCache>
+  <expireClients>0</expireClients>
+  <parameterFilters>
+    <styleParameterFilter>
+      <key>STYLES</key>
+      <defaultValue></defaultValue>
+      <availableStyles class="sorted-set"/>
+      <defaultStyle>raster</defaultStyle>
+    </styleParameterFilter>
+  </parameterFilters>
+  <gutter>0</gutter>
+</GeoServerTileLayer>

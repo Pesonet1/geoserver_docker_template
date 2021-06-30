@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  geopoc-init:
+    container_name: geopoc-init
+    image: kartoza/geoserver:2.19.0
+    env_file:
+      - ./.env.init
+    volumes:
+      # This volume should be included by the built image
+      - ./data_dir_init:/opt/geoserver/data_dir
+    ports:
+      - 8080:8080
+    networks:
+      - default
