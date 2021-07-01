@@ -6,16 +6,12 @@ This repository assumes that Geoserver configuration (data_dir content) is manag
 
 ## TODO
 
-Mount users file outside data_dir => credentials could be served as plain text?
-- data_dir/security/usergroup/default/users.xml
-
-Inject user passwords as plain text from env variables?
-<user enabled="true" name="admin" password="plain:${PASSWORD_FROM_ENV}"/>
-
-Set all passwords to be plain and inject them from env variables?
-
-how to set monitoring
-how to set logging
+- Mount users file outside data_dir => credentials could be served as plain text?
+  - data_dir/security/usergroup/default/users.xml
+- Inject user passwords as plain text from env variables?
+  - `<user enabled="true" name="admin" password="plain:${PASSWORD_FROM_ENV}"/>`
+- Set all passwords to be plain and inject them from env variables?
+- How to set monitoring
 
 ## Running
 
@@ -43,7 +39,7 @@ Build "production ready" image with following command
 docker build . -f .\Dockerfile -t geopoc
 ```
 
-#### Environemnt variables
+#### Environment variables
 
 Geoserver system setting -DALLOW_ENV_PARAMETRIZATION=true enables parametrizing some of the Geoserver settings via environment variables. These can be set with ${<ENV_VARIABLE>} template string. Note, that not all settings can be parametrizized.
 
@@ -98,13 +94,13 @@ JKS_STORE_PASSWORD=
 
 Mount following directories as volumes
 
-data => /opt/geoserver/data_dir/data
+`data => /opt/geoserver/data_dir/data`
 
 #### Mount JNDI configuration via tomcat
 
 Optionally mount JNDI configuration for database connection configuration
 
-./tomcat/context.xml => /usr/local/tomcat/conf/context.xml
+`./tomcat/context.xml => /usr/local/tomcat/conf/context.xml`
 
 Create JNDI connection with name i.e. java:comp/env/jdbc/postgres with following example context.xml file
 
@@ -155,7 +151,7 @@ Following chapters contain some information on how to configure some of the imag
 
 Add own plugins inside Dockerfile configuration
 
-/usr/local/tomcat/webapps/geoserver/WEB-INF/lib
+`/usr/local/tomcat/webapps/geoserver/WEB-INF/lib`
 
 ### Static data
 
@@ -173,17 +169,70 @@ AZURE_BLOB_ACCOUNT_NAME=
 AZURE_BLOB_ACCESS_KEY=
 ```
 
-#### Seeding
+#### GWC REST API (Seeding)
 
-TODO How to manually trigger seeding if UI is not available
+GWC REST API can be used for triggering seeding processes.
 
+Get GWC layers
+
+```
+GET http://localhost:8080/geoserver/gwc/rest/layers/
+```
+
+Post seed request
+
+```
+POST http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json
+
+BODY {
+  "seedRequest": {
+    "name": "poc:mml_milj_2020",
+    "srs": {
+      "number": 3067
+    },
+    "zoomStart": 0,
+    "zoomStop": 5,
+    "format": "image/png",
+    "type": "seed",
+    "gridSetId": "JHS180",
+    "threadCount": 4
+  }
+}
+```
+
+Get seed status
+
+```
+GET http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json
+
+RESPONSE {
+  "long-array-array": [
+    [
+      4592, # tiles completed
+      5645, # tile estimate count
+      119, # time remaining
+      1, # task id
+      1 # task status (-1 = ABORTED, 0 = PENDING, 1 = RUNNING, 2 = DONE)
+    ]
+  ]
+}
+```
+
+Kill all seeding processes or only for one layer
+
+```
+POST http://localhost:8080/geoserver/gwc/rest/seed.json?kill_all=all
+POST http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json?kill_all=all
+```
 
 ## Credentials management
 
 Geoserver has a master password that is used for encrypting all secrets inside Geoserver configurations. Additionally, Geoserver has admin user that is used for logging in web ui & managing Geoserver configuration. Latter is set during initial data_dir setup by following env variables:
 
+```
 GEOSERVER_ADMIN_USER=admin
 GEOSERVER_ADMIN_PASSWORD=geoserver
+```
 
 By default master password is geoserver. This should be changed after initializing data_dir via ui.
 
@@ -200,7 +249,7 @@ Current image credentials
 Master password => master_salasana
 Admin user password => admin_salasana
 
-Passwords can be injected inside xml configuration with ${<ENVIRONMENT_VARIABLE>}
+Passwords can be injected inside xml configuration with `${<ENVIRONMENT_VARIABLE>}`
 
 https://docs.geoserver.org/stable/en/user/community/backuprestore/configtemplate.html
 https://docs.geoserver.org/master/en/user/data/app-schema/property-interpolation.html
