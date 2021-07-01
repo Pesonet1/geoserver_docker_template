@@ -56,6 +56,7 @@
       const kunnat_wfs = new ol.layer.Vector({
         title: "Kunnat WFS",
         visible: false,
+        zIndex: 1,
         extent: projection.getExtent(),
         source: new ol.source.Vector({
           format: new ol.format.GeoJSON(),
@@ -96,6 +97,7 @@
         minZoom: 0,
         maxZoom: 15,
         opacity: 0.7,
+        zIndex: 1,
         extent: projection.getExtent(),
         source: new ol.source.WMTS({
           url: `${GEOSERVER_URL}/gwc/service/wmts`,
@@ -115,11 +117,11 @@
       });
 
       const taustakartta_wms = new ol.layer.Image({
-        title: "Taustakartta WMS",
+        title: "Taustakartta WMS (paituli)",
         type: "base",
         visible: false,
         extent: projection.getExtent(),
-        zIndex: 1,
+        zIndex: 0,
         opacity: 1,
         minZoom: 0,
         maxZoom: 15,
@@ -137,12 +139,13 @@
       });
 
       const taustakartta_wmts = new ol.layer.Tile({
-        title: "Taustakartta WMTS",
+        title: "Taustakartta WMTS (paituli)",
         type: "base",
         visible: true,
         minZoom: 0,
         maxZoom: 15,
         opacity: 1,
+        xIndex: 0,
         extent: projection.getExtent(),
         source: new ol.source.WMTS({
           url: `${GEOSERVER_URL}/gwc/service/wmts`,
