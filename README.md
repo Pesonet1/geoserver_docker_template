@@ -14,6 +14,9 @@ Inject user passwords as plain text from env variables?
 
 Set all passwords to be plain and inject them from env variables?
 
+how to set monitoring
+how to set logging
+
 ## Running
 
 ### Development
@@ -30,6 +33,8 @@ This runs container locally with mounted data_dir & data folders for managing co
 
 3. Set Geoserver configuration via Geoserver UI
 
+This will save configuration in data_dir folder
+
 ### Production
 
 Build "production ready" image with following command
@@ -38,19 +43,7 @@ Build "production ready" image with following command
 docker build . -f .\Dockerfile -t geopoc
 ```
 
-#### Azure (container registry)
-
-Following commands enable pushing container to acr registry
-
-```
-az login --tenant <tenant-id>
-az acr login --name <container-registry>
-docker login <container-registry>.azurecr.io
-docker tag geopoc <container-registry>.azurecr.io/geopoc
-docker push <container-registry>.azurecr.io/geopoc
-```
-
-#### Env variables
+#### Environemnt variables
 
 Geoserver system setting -DALLOW_ENV_PARAMETRIZATION=true enables parametrizing some of the Geoserver settings via environment variables. These can be set with ${<ENV_VARIABLE>} template string. Note, that not all settings can be parametrizized.
 
@@ -60,7 +53,7 @@ AZURE_BLOB_ACCOUNT_NAME=
 AZURE_BLOB_ACCESS_KEY=
 ```
 
-In addition, Kartoza Geoserver image exposes following env variables to be set on runtime.
+In addition, Kartoza Geoserver image exposes following environemnt variables that can be set on runtime.
 
 ```
 GEOSERVER_DATA_DIR=/opt/geoserver/data_dir
@@ -69,13 +62,16 @@ GEOWEBCACHE_CACHE_DIR=/opt/geoserver/data_dir/gwc
 GEOSERVER_ADMIN_USER=admin
 GEOSERVER_ADMIN_PASSWORD=admin_salasana
 
-If EXISTING_DATA_DIR is set to true update_passwords.sh script is run
+If EXISTING_DATA_DIR is set to true update_passwords.sh script is run (if .updatepassword.lock file is not set in data_dir)
 
 EXISTING_DATA_DIR=true
 
 Add desired community extensions
 
 COMMUNITY_EXTENSIONS=gwc-azure-blobstore-plugin
+
+Disabled admin UI if set to true
+
 WEB_INTERFACE=true
 
 See optimization options here https://docs.geoserver.org/stable/en/user/production/container.html
@@ -84,9 +80,13 @@ CATALINA_OPTS=-XX:SoftRefLRUPolicyMSPerMB=45000 -XX:+UseG1GC -server -Xbootclass
 INITIAL_MEMORY=2G # Adjust
 MAXIMUM_MEMORY=2G # Adjust
 
+Disable tomcat UI if set to false
+
 TOMCAT_EXTRAS=false
 TOMCAT_USER=
 TOMCAT_PASS=
+
+Sets let's encrypt certification if true and own certs not provided via volume -v /etc/certs:/etc/certs
 
 SSL=true
 PKCS12_PASSWORD=
@@ -94,11 +94,15 @@ JKS_KEY_PASSWORD=
 JKS_STORE_PASSWORD=
 ```
 
+#### Mount data directory
+
 Mount following directories as volumes
 
 data => /opt/geoserver/data_dir/data
 
-Optionally mount JNDI configuration
+#### Mount JNDI configuration via tomcat
+
+Optionally mount JNDI configuration for database connection configuration
 
 ./tomcat/context.xml => /usr/local/tomcat/conf/context.xml
 
@@ -131,53 +135,52 @@ Create JNDI connection with name i.e. java:comp/env/jdbc/postgres with following
 </Context>
 ```
 
-## Development workflow
+#### Azure (container registry)
 
-1. Locally manage Geoserver
-2. Build and push Docker image
-3. Apply new image on runtime environment
+Following commands enable pushing container to acr registry
 
-blob store configuration
-static data configuration (how to add locally a file that is not present locally)
-  - first create with mock file and modify path to file (mounted volume)
-geoserver data_dir configuration
-credential management
-how to add new datastore / layer / cache
-how to change password (master, admin)
-custom vs kartoza geoserver image
-how to set monitoring
-how to set logging
-how to scale out geoserver
-  - app service & clustering
-  - 		- https://docs.geoserver.org/stable/en/user/community/jms-cluster/index.html
-		- https://docs.geoserver.geo-solutions.it/edu/en/clustering/clustering/active/index.html
+```
+az login --tenant <tenant-id>
+az acr login --name <container-registry>
+docker login <container-registry>.azurecr.io
+docker tag geopoc <container-registry>.azurecr.io/geopoc
+docker push <container-registry>.azurecr.io/geopoc
+```
 
 ## Configuration
 
-https://geopoc.azurewebsites.net/geoserver/gwc/home
+Following chapters contain some information on how to configure some of the image settings
 
-https://geopoc.azurewebsites.net/geoserver/gwc/rest/reload
+### Plugins
 
 Add own plugins inside Dockerfile configuration
 
 /usr/local/tomcat/webapps/geoserver/WEB-INF/lib
 
+### Static data
+
+Static data are added to running container by mounting data dir as volume in `/opt/geoserver/data_dir/data` folder.
+
+If locally some files are not available for datastore setting, use some mock data sources and change data dir location manually from datastore configuration. Note, that is won't obviously work locally but only in running environment
 
 ### Cache (Azure BlobStore)
 
-TODO
+This repository contains configuration for using Azure Blob Storage as cached tile data source. Following environment variables are needed:
 
-Evaluate costs and size call amounts
+```
+AZURE_BLOB_CONTAINER=
+AZURE_BLOB_ACCOUNT_NAME=
+AZURE_BLOB_ACCESS_KEY=
+```
 
-Standalone GWC instead of embedded one?
-  - how to configure
-  - add example with docker compose?
+#### Seeding
 
-### Updating new image
+TODO How to manually trigger seeding if UI is not available
+
 
 ## Credentials management
 
-Geoserver has a master password that is used for encrypting all secrets inside Geoserver configurations. Additionally, Geoserver has admin user that is used for logging & managing Geoserver configuration. Latter is set during initial data_dir setup by following env variables:
+Geoserver has a master password that is used for encrypting all secrets inside Geoserver configurations. Additionally, Geoserver has admin user that is used for logging in web ui & managing Geoserver configuration. Latter is set during initial data_dir setup by following env variables:
 
 GEOSERVER_ADMIN_USER=admin
 GEOSERVER_ADMIN_PASSWORD=geoserver
@@ -190,7 +193,7 @@ NOTE! Credentials should only be updated and set on local environment via UI. On
 NOTE! Master and admin passwords should be kept in KeyVault or similar in order to prevent locking Geoserver.
 NOTE! Since master password is used for encrypting data_dir secrets etc. it doesn't matter if they are included in version control.
 
-After initialization data_dir contains encrypted master password and users (i.e. admin) and accessing running Geoserver it is only possible with the set admin password
+After initialization data_dir contains encrypted master password and users (i.e. admin) and accessing running Geoserver it is only possible with the set admin password. These can be changed on locally running Geoserver web ui.
 
 Current image credentials
 
