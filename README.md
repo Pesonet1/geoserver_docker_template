@@ -52,7 +52,25 @@ docker push <container-registry>.azurecr.io/geopoc
 
 #### Env variables
 
+Geoserver system setting -DALLOW_ENV_PARAMETRIZATION=true enables parametrizing some of the Geoserver settings via environment variables. These can be set with ${<ENV_VARIABLE>} template string. Note, that not all settings can be parametrizized.
+
 ```
+AZURE_BLOB_CONTAINER=
+AZURE_BLOB_ACCOUNT_NAME=
+AZURE_BLOB_ACCESS_KEY=
+```
+
+In addition, Kartoza Geoserver image exposes following env variables to be set on runtime.
+
+```
+GEOSERVER_DATA_DIR=/opt/geoserver/data_dir
+GEOWEBCACHE_CACHE_DIR=/opt/geoserver/data_dir/gwc
+
+GEOSERVER_ADMIN_USER=admin
+GEOSERVER_ADMIN_PASSWORD=admin_salasana
+
+If EXISTING_DATA_DIR is set to true update_passwords.sh script is run
+
 EXISTING_DATA_DIR=true
 
 Add desired community extensions
@@ -74,10 +92,6 @@ SSL=true
 PKCS12_PASSWORD=
 JKS_KEY_PASSWORD=
 JKS_STORE_PASSWORD=
-
-AZURE_BLOB_CONTAINER=
-AZURE_BLOB_ACCOUNT_NAME=
-AZURE_BLOB_ACCESS_KEY=
 ```
 
 Mount following directories as volumes
@@ -117,16 +131,49 @@ Create JNDI connection with name i.e. java:comp/env/jdbc/postgres with following
 </Context>
 ```
 
-## Configuration
+## Development workflow
 
-Passwords can be added from env variables ${} inside datastore configuration
+1. Locally manage Geoserver
+2. Build and push Docker image
+3. Apply new image on runtime environment
+
+blob store configuration
+static data configuration (how to add locally a file that is not present locally)
+  - first create with mock file and modify path to file (mounted volume)
+geoserver data_dir configuration
+credential management
+how to add new datastore / layer / cache
+how to change password (master, admin)
+custom vs kartoza geoserver image
+how to set monitoring
+how to set logging
+how to scale out geoserver
+  - app service & clustering
+  - 		- https://docs.geoserver.org/stable/en/user/community/jms-cluster/index.html
+		- https://docs.geoserver.geo-solutions.it/edu/en/clustering/clustering/active/index.html
+
+## Configuration
 
 https://geopoc.azurewebsites.net/geoserver/gwc/home
 
 https://geopoc.azurewebsites.net/geoserver/gwc/rest/reload
 
-https://docs.geoserver.org/stable/en/user/community/backuprestore/configtemplate.html
-https://docs.geoserver.org/master/en/user/data/app-schema/property-interpolation.html
+Add own plugins inside Dockerfile configuration
+
+/usr/local/tomcat/webapps/geoserver/WEB-INF/lib
+
+
+### Cache (Azure BlobStore)
+
+TODO
+
+Evaluate costs and size call amounts
+
+Standalone GWC instead of embedded one?
+  - how to configure
+  - add example with docker compose?
+
+### Updating new image
 
 ## Credentials management
 
@@ -149,3 +196,8 @@ Current image credentials
 
 Master password => master_salasana
 Admin user password => admin_salasana
+
+Passwords can be injected inside xml configuration with ${<ENVIRONMENT_VARIABLE>}
+
+https://docs.geoserver.org/stable/en/user/community/backuprestore/configtemplate.html
+https://docs.geoserver.org/master/en/user/data/app-schema/property-interpolation.html

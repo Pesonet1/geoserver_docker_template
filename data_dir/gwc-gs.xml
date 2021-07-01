@@ -28,16 +28,13 @@
     <string>JHS180</string>
   </defaultCachingGridSetIds>
   <defaultCoverageCacheFormats>
-    <string>image/vnd.jpeg-png</string>
-    <string>image/png8</string>
+    <string>image/png</string>
   </defaultCoverageCacheFormats>
   <defaultVectorCacheFormats>
-    <string>image/vnd.jpeg-png</string>
-    <string>image/png8</string>
+    <string>image/png</string>
   </defaultVectorCacheFormats>
   <defaultOtherCacheFormats>
-    <string>image/vnd.jpeg-png</string>
-    <string>image/png8</string>
+    <string>image/png</string>
   </defaultOtherCacheFormats>
   <lockProviderName>noLock</lockProviderName>
 </GeoServerGWCConfig>

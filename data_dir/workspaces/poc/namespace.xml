@@ -2,5 +2,5 @@
   <id>NamespaceInfoImpl-2acaf201:17a323fd4ff:-7ff7</id>
   <prefix>poc</prefix>
   <uri>http://google.com</uri>
-  <isolated>true</isolated>
+  <isolated>false</isolated>
 </namespace>

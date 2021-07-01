@@ -53,7 +53,7 @@
       //   }),
       // });
 
-      const wfs = new ol.layer.Vector({
+      const kunnat_wfs = new ol.layer.Vector({
         title: "Kunnat WFS",
         visible: false,
         extent: projection.getExtent(),
@@ -69,7 +69,7 @@
         })
       });
 
-      const wms = new ol.layer.Image({
+      const kunnat_wms = new ol.layer.Image({
         title: "Kunnat WMS",
         visible: false,
         extent: projection.getExtent(),
@@ -82,35 +82,11 @@
           params: {
             LAYERS: "kunnat_2019",
             TRANSPARENT: true,
-            FORMAT: "image/png8",
+            FORMAT: "image/png",
             RATIO: 1,
           },
           serverType: "geoserver",
           projection: projection,
-        }),
-      });
-
-      const corine_wmts = new ol.layer.Tile({
-        title: "Corine WMTS",
-        visible: false,
-        minZoom: 0,
-        maxZoom: 15,
-        opacity: 0.7,
-        extent: projection.getExtent(),
-        source: new ol.source.WMTS({
-          url: `${GEOSERVER_URL}/gwc/service/wmts`,
-          layer: "poc:corine",
-          format: "image/png",
-          matrixSet: "JHS180",
-          style: "",
-          tileGrid: new ol.tilegrid.WMTS({
-            origin: ol.extent.getTopLeft(projection.getExtent()),
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25],
-            matrixIds,
-            extent: projection.getExtent(),
-          }),
-          projection: projection,
-          transition: 0,
         }),
       });
 
@@ -138,18 +114,40 @@
         }),
       });
 
+      const taustakartta_wms = new ol.layer.Image({
+        title: "Taustakartta WMS",
+        type: "base",
+        visible: false,
+        extent: projection.getExtent(),
+        zIndex: 1,
+        opacity: 1,
+        minZoom: 0,
+        maxZoom: 15,
+        source: new ol.source.ImageWMS({
+          url: `${GEOSERVER_URL}/poc/wms`,
+          params: {
+            LAYERS: "mml_milj_2020",
+            TRANSPARENT: true,
+            FORMAT: "image/png",
+            RATIO: 1,
+          },
+          serverType: "geoserver",
+          projection: projection,
+        }),
+      });
+
       const taustakartta_wmts = new ol.layer.Tile({
         title: "Taustakartta WMTS",
         type: "base",
         visible: true,
         minZoom: 0,
         maxZoom: 15,
-        opacity: 0.7,
+        opacity: 1,
         extent: projection.getExtent(),
         source: new ol.source.WMTS({
           url: `${GEOSERVER_URL}/gwc/service/wmts`,
           layer: "poc:mml_milj_2020",
-          format: "image/png8",
+          format: "image/png",
           matrixSet: "JHS180",
           style: "",
           tileGrid: new ol.tilegrid.WMTS({
@@ -165,7 +163,7 @@
 
       const baseMaps = new ol.layer.Group({
         title: "Karttatasot",
-        layers: [taustakartta_wmts, wfs, wms, corine_wmts, kunnat_wmts]
+        layers: [taustakartta_wms, taustakartta_wmts, kunnat_wfs, kunnat_wms, kunnat_wmts]
       });
 
       var map = new ol.Map({

@@ -1,5 +1,5 @@
 <featureType>
-  <id>FeatureTypeInfoImpl-2acaf201:17a323fd4ff:-7ff3</id>
+  <id>FeatureTypeInfoImpl-1f92dae7:17a606a77e8:-7ffb</id>
   <name>kunnat_2019</name>
   <nativeName>kunnat_2019</nativeName>
   <namespace>
@@ -37,7 +37,7 @@
     <maxx>732907.8218</maxx>
     <miny>6632288.0902</miny>
     <maxy>7776493.4815</maxy>
-    <crs class="projected">EPSG:3067</crs>
+    <crs class="projected">EPSG:5048</crs>
   </nativeBoundingBox>
   <latLonBoundingBox>
     <minx>15.915736843717715</minx>
@@ -46,8 +46,20 @@
     <maxy>70.09489650556749</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
-  <projectionPolicy>REPROJECT_TO_DECLARED</projectionPolicy>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
+  <metadata>
+    <entry key="elevation">
+      <dimensionInfo>
+        <enabled>false</enabled>
+      </dimensionInfo>
+    </entry>
+    <entry key="time">
+      <dimensionInfo>
+        <enabled>false</enabled>
+      </dimensionInfo>
+    </entry>
+  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl-2acaf201:17a323fd4ff:-7ff4</id>
   </store>

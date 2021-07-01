@@ -18,7 +18,7 @@
     AXIS[&quot;Geodetic latitude&quot;, NORTH], 
     AXIS[&quot;Geodetic longitude&quot;, EAST], 
     AUTHORITY[&quot;EPSG&quot;,&quot;4258&quot;]], 
-  PROJECTION[&quot;Transverse_Mercator&quot;, AUTHORITY[&quot;EPSG&quot;,&quot;9807&quot;]], 
+  PROJECTION[&quot;Transverse_Mercator&quot;], 
   PARAMETER[&quot;central_meridian&quot;, 27.0], 
   PARAMETER[&quot;latitude_of_origin&quot;, 0.0], 
   PARAMETER[&quot;scale_factor&quot;, 0.9996], 
