@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <Resource
+      name="jdbc/postgres"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="org.postgresql.Driver"
+      url="jdbc:postgresql://host.docker.internal:5432/mtu"
+      username="postgres" password="plop123"
+      maxActive="20"
+      initialSize="0"
+      minIdle="0"
+      maxIdle="8"
+      maxWait="10000"
+      timeBetweenEvictionRunsMillis="30000"
+      minEvictableIdleTimeMillis="60000"
+      testWhileIdle="true"
+      validationQuery="SELECT 1"
+    />
+</Context>

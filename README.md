@@ -1,4 +1,4 @@
-# Geoserver container configuration
+# Kartoza/geoserver docker image configuration/utilization
 
 This repository is using [Kartoza Geoserver image](https://github.com/kartoza/docker-geoserver) for running Geoserver and managing Geoserver configuration. This repository leverage this image by adding configuration management & documentation for using it in future projects.
 
@@ -7,11 +7,11 @@ This repository assumes that Geoserver configuration (data_dir content) is manag
 ## TODO
 
 - Mount users file outside data_dir => credentials could be served as plain text?
-  - data_dir/security/usergroup/default/users.xml
+  - `data_dir/security/usergroup/default/users.xml`
 - Inject user passwords as plain text from env variables?
   - `<user enabled="true" name="admin" password="plain:${PASSWORD_FROM_ENV}"/>`
 - Set all passwords to be plain and inject them from env variables?
-- How to set monitoring
+- How to configure monitoring?
 
 ## Running
 
@@ -238,9 +238,9 @@ By default master password is geoserver. This should be changed after initializi
 
 Master password can be fetched by requesting `<geoserver-url>/geoserver/rest/security/masterpw.xml` url with admin user credentials (basic auth). See https://github.com/kartoza/docker-geoserver/issues/69 for more information how to change it via REST API call.
 
-NOTE! Credentials should only be updated and set on local environment via UI. On server environment UI should be disabled.
-NOTE! Master and admin passwords should be kept in KeyVault or similar in order to prevent locking Geoserver.
-NOTE! Since master password is used for encrypting data_dir secrets etc. it doesn't matter if they are included in version control.
+**NOTE!** Credentials should only be updated and set on local environment via UI. On server environment UI should be disabled.
+**NOTE!** Master and admin passwords should be kept in KeyVault or similar in order to prevent locking Geoserver.
+**NOTE!** Since master password is used for encrypting data_dir secrets etc. it doesn't matter if they are included in version control.
 
 After initialization data_dir contains encrypted master password and users (i.e. admin) and accessing running Geoserver it is only possible with the set admin password. These can be changed on locally running Geoserver web ui.
 

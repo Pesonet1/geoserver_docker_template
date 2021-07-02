@@ -1,8 +1,5 @@
 <wfs>
-  <id>WFSInfoImpl--1c136f2e:17a6081bdb5:-7fc0</id>
-  <workspace>
-    <id>WorkspaceInfoImpl-2acaf201:17a323fd4ff:-7ff8</id>
-  </workspace>
+  <id>WFSInfoImpl--2091a238:17a65752e90:-8000</id>
   <enabled>true</enabled>
   <name>WFS</name>
   <versions>

@@ -11,7 +11,9 @@ data_dir/logs/geoserver.log*
 # Exclude all Geoserver "backup" files
 .bak
 
-tomcat
+data_dir/monitoring/*
+!data_dir/monitoring/filter.properties
+!data_dir/monitoring/monitor.properties
 
 data_dir/gwc/*
 !data_dir/gwc/geowebcache.xml
