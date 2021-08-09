@@ -182,11 +182,11 @@ GET http://localhost:8080/geoserver/gwc/rest/layers/
 Post seed request
 
 ```
-POST http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json
+POST http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json
 
 BODY {
   "seedRequest": {
-    "name": "poc:mml_milj_2020",
+    "name": "poc:kunnat_2019",
     "srs": {
       "number": 3067
     },
@@ -203,7 +203,7 @@ BODY {
 Get seed status
 
 ```
-GET http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json
+GET http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json
 
 RESPONSE {
   "long-array-array": [
@@ -222,7 +222,7 @@ Kill all seeding processes or only for one layer
 
 ```
 POST http://localhost:8080/geoserver/gwc/rest/seed.json?kill_all=all
-POST http://localhost:8080/geoserver/gwc/rest/seed/poc:mml_milj_2020.json?kill_all=all
+POST http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json?kill_all=all
 ```
 
 ## Credentials management
@@ -240,7 +240,6 @@ Master password can be fetched by requesting `<geoserver-url>/geoserver/rest/sec
 
 **NOTE!** Credentials should only be updated and set on local environment via UI. On server environment UI should be disabled.
 **NOTE!** Master and admin passwords should be kept in KeyVault or similar in order to prevent locking Geoserver.
-**NOTE!** Since master password is used for encrypting data_dir secrets etc. it doesn't matter if they are included in version control.
 
 After initialization data_dir contains encrypted master password and users (i.e. admin) and accessing running Geoserver it is only possible with the set admin password. These can be changed on locally running Geoserver web ui.
 
