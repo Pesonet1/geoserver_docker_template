@@ -18,7 +18,7 @@
     AXIS[&quot;Geodetic latitude&quot;, NORTH], 
     AXIS[&quot;Geodetic longitude&quot;, EAST], 
     AUTHORITY[&quot;EPSG&quot;,&quot;4258&quot;]], 
-  PROJECTION[&quot;Transverse_Mercator&quot;], 
+  PROJECTION[&quot;Transverse_Mercator&quot;, AUTHORITY[&quot;EPSG&quot;,&quot;9807&quot;]], 
   PARAMETER[&quot;central_meridian&quot;, 27.0], 
   PARAMETER[&quot;latitude_of_origin&quot;, 0.0], 
   PARAMETER[&quot;scale_factor&quot;, 0.9996], 
@@ -46,7 +46,18 @@
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
   <metadata>
+    <entry key="elevation">
+      <dimensionInfo>
+        <enabled>false</enabled>
+      </dimensionInfo>
+    </entry>
     <entry key="OTHER_SRS">urn:ogc:def:crs:EPSG::3067,EPSG:3067</entry>
+    <entry key="time">
+      <dimensionInfo>
+        <enabled>false</enabled>
+      </dimensionInfo>
+    </entry>
+    <entry key="cachingEnabled">false</entry>
   </metadata>
   <store class="wmtsStore">
     <id>WMTSStoreInfoImpl-435791e6:17a57cb40b6:-7fbd</id>

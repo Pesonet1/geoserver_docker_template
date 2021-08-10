@@ -83,7 +83,7 @@
           params: {
             LAYERS: "kunnat_2019",
             TRANSPARENT: true,
-            FORMAT: "image/png",
+            FORMAT: "image/png8",
             RATIO: 1,
           },
           serverType: "geoserver",
@@ -102,7 +102,7 @@
         source: new ol.source.WMTS({
           url: `${GEOSERVER_URL}/gwc/service/wmts`,
           layer: "poc:kunnat_2019",
-          format: "image/png",
+          format: "image/png8",
           matrixSet: "JHS180",
           style: "",
           tileGrid: new ol.tilegrid.WMTS({
@@ -130,7 +130,7 @@
           params: {
             LAYERS: "mml_milj_2020",
             TRANSPARENT: true,
-            FORMAT: "image/png",
+            FORMAT: "image/png8",
             RATIO: 1,
           },
           serverType: "geoserver",
@@ -150,7 +150,7 @@
         source: new ol.source.WMTS({
           url: `${GEOSERVER_URL}/gwc/service/wmts`,
           layer: "poc:mml_milj_2020",
-          format: "image/png",
+          format: "image/png8",
           matrixSet: "JHS180",
           style: "",
           tileGrid: new ol.tilegrid.WMTS({

@@ -6,6 +6,7 @@
   <blobStoreId>azure_blob</blobStoreId>
   <mimeFormats>
     <string>image/png</string>
+    <string>image/png8</string>
   </mimeFormats>
   <gridSubsets>
     <gridSubset>
