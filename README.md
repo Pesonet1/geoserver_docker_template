@@ -37,6 +37,7 @@ Build "production ready" image with following command
 
 ```
 docker build . -f .\Dockerfile -t geopoc
+docker run --rm -it -p 8080:8080 geopoc
 ```
 
 #### Environment variables

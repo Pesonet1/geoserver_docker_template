@@ -25,6 +25,8 @@
       proj4.defs("EPSG:3067", "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
       ol.proj.proj4.register(proj4);
 
+      const authkey = "e01b6212-a887-4b10-a4ee-2c750524d36c";
+
       const projection = ol.proj.get("EPSG:3067");
       const matrixIds = new Array(16).fill(0).map((value, index) => `JHS180:${index.toString()}`);
 
@@ -61,9 +63,9 @@
         source: new ol.source.Vector({
           format: new ol.format.GeoJSON(),
           url: () => {
-            return`${GEOSERVER_URL}/poc/wms` +
+            return`${GEOSERVER_URL}/poc/wfs` +
               `?service=wfs&version=2.0.0&request=GetFeature&typeNames=kunnat_2019` +
-              `&outputFormat=application/json&LAYERS=kunnat_2019`;
+              `&outputFormat=application/json&LAYERS=kunnat_2019&authkey=${authkey}`;
           },
           strategy: ol.loadingstrategy.bbox,
           projection: projection
@@ -85,6 +87,7 @@
             TRANSPARENT: true,
             FORMAT: "image/png8",
             RATIO: 1,
+            authkey,
           },
           serverType: "geoserver",
           projection: projection,
@@ -100,10 +103,11 @@
         zIndex: 1,
         extent: projection.getExtent(),
         source: new ol.source.WMTS({
-          url: `${GEOSERVER_URL}/gwc/service/wmts`,
+          url: `${GEOSERVER_URL}/gwc/service/wmts?authkey=${authkey}`,
           layer: "poc:kunnat_2019",
           format: "image/png8",
           matrixSet: "JHS180",
+          authkey,
           style: "",
           tileGrid: new ol.tilegrid.WMTS({
             origin: ol.extent.getTopLeft(projection.getExtent()),
@@ -132,6 +136,7 @@
             TRANSPARENT: true,
             FORMAT: "image/png8",
             RATIO: 1,
+            authkey,
           },
           serverType: "geoserver",
           projection: projection,
@@ -148,7 +153,7 @@
         xIndex: 0,
         extent: projection.getExtent(),
         source: new ol.source.WMTS({
-          url: `${GEOSERVER_URL}/gwc/service/wmts`,
+          url: `${GEOSERVER_URL}/gwc/service/wmts?authkey=${authkey}`,
           layer: "poc:mml_milj_2020",
           format: "image/png8",
           matrixSet: "JHS180",
