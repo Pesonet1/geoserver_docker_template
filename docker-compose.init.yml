@@ -4,7 +4,7 @@ services:
     container_name: geopoc-init
     image: kartoza/geoserver:2.19.0
     env_file:
-      - ./.env.init
+      - ./.env.geoserver.init
     volumes:
       - ./data_dir_init:/opt/geoserver/data_dir
     ports:

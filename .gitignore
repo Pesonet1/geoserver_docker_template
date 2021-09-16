@@ -16,7 +16,16 @@ data_dir/monitoring/*
 !data_dir/monitoring/monitor.properties
 
 data_dir/gwc/*
+!data_dir/gwc/geowebcache-core-context.xml
 !data_dir/gwc/geowebcache.xml
 !data_dir/gwc/metadata.properties
 
-.env.prod
+.env.geoserver
+.env.geowebcache
+
+geowebcache/configuration/diskquota_page_store
+geowebcache/configuration/diskquota_page_store_h2
+geowebcache/cache
+
+geowebcache/geowebcache-azureblob-context.xml
+geowebcache/gwc-azure-blob-1.18.4.jar

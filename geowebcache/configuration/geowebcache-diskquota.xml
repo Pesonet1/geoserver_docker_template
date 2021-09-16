@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gwcQuotaConfiguration>
+  <enabled>false</enabled>
+  <!-- Remove if we want to use Berkeley DB for quotaStore -->
+  <!-- Use JDBC for custom database quotaStore add <gwcJdbcConfiguration> for this -->
+  <quotaStore>H2</quotaStore>
+  <!-- <gwcJdbcConfiguration>
+    <dialect>PostgreSQL</dialect>
+    <connectionPool>
+      <driver>org.postgresql.Driver</driver>
+      <url>jdbc:postgresql:testdb</url>
+      <username>test</username>
+      <password>test</password>
+      <minConnections>1</minConnections>
+      <maxConnections>10</maxConnections>
+      <fetchSize>1000</fetchSize>
+      <connectionTimeout>50</connectionTimeout>
+      <validationQuery>select 1</validationQuery>
+      <maxOpenPreparedStatements>50</maxOpenPreparedStatements>
+    </connectionPool>
+  </gwcJdbcConfiguration> -->
+  <cacheCleanUpFrequency>10</cacheCleanUpFrequency>
+  <cacheCleanUpUnits>SECONDS</cacheCleanUpUnits>
+  <maxConcurrentCleanUps>2</maxConcurrentCleanUps>
+  <!-- LFU = Least Frequently Used, LRU Least Recently Used -->
+  <globalExpirationPolicyName>LFU</globalExpirationPolicyName>
+  <globalQuota>
+    <value>512</value>
+    <units>GiB</units>
+  </globalQuota>
+  <layerQuotas> <!-- optional -->
+    <!-- <LayerQuota>
+      <layer>topp:states</layer>
+      <expirationPolicyName>LRU</expirationPolicyName>
+      <quota>
+        <value>100</value>
+        <units>GiB</value>
+      </quota>
+    </LayerQuota> -->
+    <!-- Other layers -->
+  </layerQuotas>
+</gwcQuotaConfiguration>

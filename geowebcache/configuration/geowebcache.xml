@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gwcConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://geowebcache.org/schema/1.17.0"
+  xsi:schemaLocation="http://geowebcache.org/schema/1.17.0 http://geowebcache.org/schema/1.17.0/geowebcache.xsd">
+  <version>1.8.0</version>
+  <backendTimeout>120</backendTimeout>
+  <serviceInformation>
+    <title>GeoWebCache</title>
+    <description>GeoWebCache is an advanced tile cache for WMS servers</description>
+    <keywords>
+      <string>WMS</string>
+      <string>WMTS</string>
+    </keywords>
+    <serviceProvider>
+      <providerName>John Smith inc.</providerName>
+      <providerSite>http://www.example.com/</providerSite>
+      <serviceContact>
+        <individualName>John Smith</individualName>
+        <positionName>Geospatial Expert</positionName>
+        <addressType>Work</addressType>
+        <addressStreet>1 Bumpy St.</addressStreet>
+        <addressCity>Hobart</addressCity>
+        <addressAdministrativeArea>TAS</addressAdministrativeArea>
+        <addressPostalCode>7005</addressPostalCode>
+        <addressCountry>Australia</addressCountry>
+        <phoneNumber>+61 3 0000 0000</phoneNumber>
+        <faxNumber>+61 3 0000 0001</faxNumber>
+        <addressEmail>john.smith@example.com</addressEmail>
+      </serviceContact>
+    </serviceProvider>
+    <fees>NONE</fees>
+    <accessConstraints>NONE</accessConstraints>
+  </serviceInformation>
+
+  <!-- <fullWMS>true</fullWMS> -->
+
+  <blobStores>
+    <!-- A sample file blob store configuration. Enable and set as default to override the legacy lookup method for the cache directory  -->
+    <FileBlobStore default="false">
+      <id>defaultCache</id>
+      <enabled>true</enabled>
+      <baseDirectory>/tmp/defaultCache</baseDirectory>
+      <!-- 4096 -->
+      <fileSystemBlockSize>16384</fileSystemBlockSize>
+    </FileBlobStore>
+
+    <!-- <AzureBlobStore default="false">
+      <id>azure_blob</id>
+      <enabled>true</enabled>
+      <container>geoblob</container>
+      <accountName>geost</accountName>
+      <accountKey>CdNcboirE0koa6dPx4VUkzGerQg4FsLzLrbbWjkdjl1gBsfb04ydN0Y6p8oqv3+OcstI4H7/yWmRjUxilpZaeQ==</accountKey>
+      <maxConnections>100</maxConnections>
+      <useHTTPS>true</useHTTPS>
+    </AzureBlobStore> -->
+  </blobStores>
+
+  <gridSets>
+    <gridSet>
+      <name>JHS180</name>
+      <srs>
+        <number>3067</number>
+      </srs>
+      <extent>
+        <coords>
+          <double>-548576.0</double>
+          <double>6291456.0</double>
+          <double>1548576.0</double>
+          <double>8388608.0</double>
+        </coords>
+      </extent>
+      <alignTopLeft>false</alignTopLeft>
+      <resolutions>
+        <double>8192.0</double>
+        <double>4096.0</double>
+        <double>2048.0</double>
+        <double>1024.0</double>
+        <double>512.0</double>
+        <double>256.0</double>
+        <double>128.0</double>
+        <double>64.0</double>
+        <double>32.0</double>
+        <double>16.0</double>
+        <double>8.0</double>
+        <double>4.0</double>
+        <double>2.0</double>
+        <double>1.0</double>
+        <double>0.5</double>
+        <double>0.25</double>
+      </resolutions>
+      <metersPerUnit>1.0</metersPerUnit>
+      <pixelSize>2.8E-4</pixelSize>
+      <scaleNames>
+        <string>JHS180:0</string>
+        <string>JHS180:1</string>
+        <string>JHS180:2</string>
+        <string>JHS180:3</string>
+        <string>JHS180:4</string>
+        <string>JHS180:5</string>
+        <string>JHS180:6</string>
+        <string>JHS180:7</string>
+        <string>JHS180:8</string>
+        <string>JHS180:9</string>
+        <string>JHS180:10</string>
+        <string>JHS180:11</string>
+        <string>JHS180:12</string>
+        <string>JHS180:13</string>
+        <string>JHS180:14</string>
+        <string>JHS180:15</string>
+      </scaleNames>
+      <tileHeight>256</tileHeight>
+      <tileWidth>256</tileWidth>
+      <yCoordinateFirst>false</yCoordinateFirst>
+    </gridSet>
+
+    <gridSet>
+      <name>JHS180_512</name>
+      <srs>
+        <number>3067</number>
+      </srs>
+      <extent>
+        <coords>
+          <double>-548576.0</double>
+          <double>6291456.0</double>
+          <double>1548576.0</double>
+          <double>8388608.0</double>
+        </coords>
+      </extent>
+      <alignTopLeft>false</alignTopLeft>
+      <resolutions>
+        <double>8192.0</double>
+        <double>4096.0</double>
+        <double>2048.0</double>
+        <double>1024.0</double>
+        <double>512.0</double>
+        <double>256.0</double>
+        <double>128.0</double>
+        <double>64.0</double>
+        <double>32.0</double>
+        <double>16.0</double>
+        <double>8.0</double>
+        <double>4.0</double>
+        <double>2.0</double>
+        <double>1.0</double>
+        <double>0.5</double>
+        <double>0.25</double>
+      </resolutions>
+      <metersPerUnit>1.0</metersPerUnit>
+      <pixelSize>2.8E-4</pixelSize>
+      <scaleNames>
+        <string>JHS180:0</string>
+        <string>JHS180:1</string>
+        <string>JHS180:2</string>
+        <string>JHS180:3</string>
+        <string>JHS180:4</string>
+        <string>JHS180:5</string>
+        <string>JHS180:6</string>
+        <string>JHS180:7</string>
+        <string>JHS180:8</string>
+        <string>JHS180:9</string>
+        <string>JHS180:10</string>
+        <string>JHS180:11</string>
+        <string>JHS180:12</string>
+        <string>JHS180:13</string>
+        <string>JHS180:14</string>
+        <string>JHS180:15</string>
+      </scaleNames>
+      <tileHeight>512</tileHeight>
+      <tileWidth>512</tileWidth>
+      <yCoordinateFirst>false</yCoordinateFirst>
+    </gridSet>
+  </gridSets>
+
+  <layers>
+    <wmsLayer>
+      <name>kunnat_2019</name>
+      <!-- <id>LayerInfoImpl-435791e6:17a57cb40b6:-7f0e</id> -->
+      <!-- <enabled>true</enabled> -->
+      <blobStoreId>defaultCache</blobStoreId>
+      <metaInformation>
+        <title>Nicer title for Image States</title>
+        <description>This is a description. Fascinating.</description>
+      </metaInformation>
+      <!-- <inMemoryCached>true</inMemoryCached> -->
+      <mimeFormats>
+        <string>image/png</string>
+        <string>image/png8</string>
+      </mimeFormats>
+      <gridSubsets>
+        <gridSubset>
+          <gridSetName>JHS180</gridSetName>
+          <extent>
+          <coords>
+            <double>-548576.0</double>
+            <double>6291456.0</double>
+            <double>1548576.0</double>
+            <double>8388608.0</double>
+          </coords>
+        </extent>
+        </gridSubset>
+      </gridSubsets>
+      <parameterFilters>
+        <regexParameterFilter>
+          <key>authkey</key>
+          <defaultValue>e01b6212-a887-4b10-a4ee-2c750524d36c</defaultValue>
+          <regex>.*</regex>
+        </regexParameterFilter>
+      </parameterFilters>
+      <wmsUrl>
+        <string>https://geopoc.azurewebsites.net/geoserver/poc/wms</string>
+      </wmsUrl>
+      <wmsLayers>poc:kunnat_2019</wmsLayers>
+      <transparent>true</transparent>
+      <!-- <bgColor>0x0066FF</bgColor> -->
+    </wmsLayer>
+
+        <wmsLayer>
+      <name>kunnat_2019_512</name>
+      <!-- <id>LayerInfoImpl-435791e6:17a57cb40b6:-7f0e</id> -->
+      <!-- <enabled>true</enabled> -->
+      <blobStoreId>defaultCache</blobStoreId>
+      <metaInformation>
+        <title>Nicer title for Image States</title>
+        <description>This is a description. Fascinating.</description>
+      </metaInformation>
+      <!-- <inMemoryCached>true</inMemoryCached> -->
+      <mimeFormats>
+        <string>image/png</string>
+        <string>image/png8</string>
+      </mimeFormats>
+      <gridSubsets>
+        <gridSubset>
+          <gridSetName>JHS180_512</gridSetName>
+          <extent>
+          <coords>
+            <double>-548576.0</double>
+            <double>6291456.0</double>
+            <double>1548576.0</double>
+            <double>8388608.0</double>
+          </coords>
+        </extent>
+        </gridSubset>
+      </gridSubsets>
+      <parameterFilters>
+        <regexParameterFilter>
+          <key>authkey</key>
+          <defaultValue>e01b6212-a887-4b10-a4ee-2c750524d36c</defaultValue>
+          <regex>.*</regex>
+        </regexParameterFilter>
+      </parameterFilters>
+      <wmsUrl>
+        <string>https://geopoc.azurewebsites.net/geoserver/poc/wms</string>
+      </wmsUrl>
+      <wmsLayers>poc:kunnat_2019</wmsLayers>
+      <transparent>true</transparent>
+      <!-- <bgColor>0x0066FF</bgColor> -->
+    </wmsLayer>
+  </layers>
+</gwcConfiguration>

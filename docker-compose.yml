@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile.local
     env_file:
-      - ./.env.prod
+      - ./.env.geoserver
     volumes:
       # This volume should be included by the built image (here only for dev usage)
       - ./data_dir:/opt/geoserver/data_dir
@@ -16,6 +16,24 @@ services:
       # - ./tomcat/context.xml:/usr/local/tomcat/conf/context.xml
       # Logs
       # - ./logs:/opt/geoserver/data_dir/logs
+    ports:
+      - 8082:8080
+    networks:
+      - default
+  geowebcache:
+    container_name: geowebcache
+    build:
+      context: ./geowebcache
+      dockerfile: ./Dockerfile.local
+      args:
+        - GWC_VERSION=1.18.4
+    env_file:
+      - ./.env.geowebcache
+    volumes:
+      # This volume should be included by the built image (here only for dev usage)
+      - ./geowebcache/configuration:/usr/local/tomcat/temp/geowebcache
+      # Set this volume on server side to be any SUN/NFS disk etc.
+      - ./geowebcache/cache:/tmp/defaultCache
     ports:
       - 8080:8080
     networks:

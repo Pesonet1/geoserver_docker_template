@@ -11,38 +11,49 @@ This repository assumes that Geoserver configuration (data_dir content) is manag
 - Inject user passwords as plain text from env variables?
   - `<user enabled="true" name="admin" password="plain:${PASSWORD_FROM_ENV}"/>`
 - Set all passwords to be plain and inject them from env variables?
-- How to configure monitoring?
 
 ## Running
 
 ### Development
 
-1. Set .env.prod file environment variables.
+1. Create and configure .env.geoserver & .env.geowebcache files environment variables based on template env-files.
 
-Enable UI by setting WEB_INTERFACE env variable to false. In addition, set EXISTING_DATA_DIR value to true to prevent overriding passwords
+For Geoserver enable UI by setting WEB_INTERFACE env variable to false. In addition, set EXISTING_DATA_DIR value to true to prevent overriding passwords
 
 2. Run container locally with docker-compose:
 
 `docker-compose -f ./docker-compose.yml up --build`
 
-This runs container locally with mounted data_dir & data folders for managing configuration
+For Geoserver this runs container locally with mounted data_dir & data folders for managing configuration. For Geowebcache folder "cache" is expected to be inside geowebcache folder. This will contain all seeded tiles. Additionally, for Geowebcache configuration folder is mounted for external configurations.
 
-3. Set Geoserver configuration via Geoserver UI
+Geoserver is accessible => `http://localhost:8082/geoserver`. Login with admin/admin_salasana
+Geowebcache is accessible => `http://localhost:8080/gwc`. Login with with set credentials inside .env variables
+
+3. Adjust Geoserver configuration via Geoserver UI
 
 This will save configuration in data_dir folder
 
+4. Test Geowebcache seeding and layer configuration
+
 ### Production
 
-Build "production ready" image with following command
+Build "production ready" Geoserver image with following command
 
 ```
-docker build . -f .\Dockerfile -t geopoc
-docker run --rm -it -p 8080:8080 geopoc
+docker build . -f .\Dockerfile -t geoserverpoc
+docker run --rm -it -p 8080:8080 geoserverpoc
+```
+
+Build "production ready" Geowebcache image with following command
+
+```
+docker build . -f .\geowebcache\Dockerfile -t geowebcachepoc
+docker run --rm -it -p 8080:8080 geowebcachepoc
 ```
 
 #### Environment variables
 
-Geoserver system setting -DALLOW_ENV_PARAMETRIZATION=true enables parametrizing some of the Geoserver settings via environment variables. These can be set with ${<ENV_VARIABLE>} template string. Note, that not all settings can be parametrizized.
+Geoserver system setting -DALLOW_ENV_PARAMETRIZATION=true enables parametrizing some of the Geoserver settings via environment variables. These can be set with ${<ENV_VARIABLE>} template string. Note, that not all settings can be parametrizized such as user credentials.
 
 ```
 AZURE_BLOB_CONTAINER=
@@ -168,62 +179,6 @@ This repository contains configuration for using Azure Blob Storage as cached ti
 AZURE_BLOB_CONTAINER=
 AZURE_BLOB_ACCOUNT_NAME=
 AZURE_BLOB_ACCESS_KEY=
-```
-
-#### GWC REST API (Seeding)
-
-GWC REST API can be used for triggering seeding processes.
-
-Get GWC layers
-
-```
-GET http://localhost:8080/geoserver/gwc/rest/layers/
-```
-
-Post seed request
-
-```
-POST http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json
-
-BODY {
-  "seedRequest": {
-    "name": "poc:kunnat_2019",
-    "srs": {
-      "number": 3067
-    },
-    "zoomStart": 0,
-    "zoomStop": 5,
-    "format": "image/png",
-    "type": "seed",
-    "gridSetId": "JHS180",
-    "threadCount": 4
-  }
-}
-```
-
-Get seed status
-
-```
-GET http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json
-
-RESPONSE {
-  "long-array-array": [
-    [
-      4592, # tiles completed
-      5645, # tile estimate count
-      119, # time remaining
-      1, # task id
-      1 # task status (-1 = ABORTED, 0 = PENDING, 1 = RUNNING, 2 = DONE)
-    ]
-  ]
-}
-```
-
-Kill all seeding processes or only for one layer
-
-```
-POST http://localhost:8080/geoserver/gwc/rest/seed.json?kill_all=all
-POST http://localhost:8080/geoserver/gwc/rest/seed/poc:kunnat_2019.json?kill_all=all
 ```
 
 ## Credentials management
