@@ -43,16 +43,6 @@
       <!-- 4096 -->
       <fileSystemBlockSize>16384</fileSystemBlockSize>
     </FileBlobStore>
-
-    <!-- <AzureBlobStore default="false">
-      <id>azure_blob</id>
-      <enabled>true</enabled>
-      <container>geoblob</container>
-      <accountName>geost</accountName>
-      <accountKey>CdNcboirE0koa6dPx4VUkzGerQg4FsLzLrbbWjkdjl1gBsfb04ydN0Y6p8oqv3+OcstI4H7/yWmRjUxilpZaeQ==</accountKey>
-      <maxConnections>100</maxConnections>
-      <useHTTPS>true</useHTTPS>
-    </AzureBlobStore> -->
   </blobStores>
 
   <gridSets>
@@ -207,7 +197,7 @@
         </regexParameterFilter>
       </parameterFilters>
       <wmsUrl>
-        <string>https://geopoc.azurewebsites.net/geoserver/poc/wms</string>
+        <string>https://localhost:8082/geoserver/poc/wms</string>
       </wmsUrl>
       <wmsLayers>poc:kunnat_2019</wmsLayers>
       <transparent>true</transparent>
@@ -249,7 +239,7 @@
         </regexParameterFilter>
       </parameterFilters>
       <wmsUrl>
-        <string>https://geopoc.azurewebsites.net/geoserver/poc/wms</string>
+        <string>https://localhost:8082/geoserver/poc/wms</string>
       </wmsUrl>
       <wmsLayers>poc:kunnat_2019</wmsLayers>
       <transparent>true</transparent>
